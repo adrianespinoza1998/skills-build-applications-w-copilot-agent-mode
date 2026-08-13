@@ -5,7 +5,6 @@ import Teams from './components/Teams.jsx';
 import Users from './components/Users.jsx';
 import Workouts from './components/Workouts.jsx';
 import logo from '../../../docs/octofitapp-small.png';
-import './App.css';
 
 const navigation = [
   { to: '/users', label: 'Users' },
