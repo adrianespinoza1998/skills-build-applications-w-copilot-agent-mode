@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 const getApiBaseUrl = () => {
   const codespaceName = import.meta.env.VITE_CODESPACE_NAME?.trim();
   return codespaceName
-    ? `https://${codespaceName}-8000.app.github.dev`
-    : 'http://localhost:8000';
+    ? `https://${codespaceName}-8000.app.github.dev/api/leaderboard/`
+    : 'http://localhost:8000/api/leaderboard/';
 };
 
 const normalizeRecords = (payload) => {
@@ -29,8 +29,7 @@ function Leaderboard() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const apiBaseUrl = getApiBaseUrl();
-    const endpoint = `${apiBaseUrl}/api/leaderboard/`;
+    const endpoint = getApiBaseUrl();
 
     fetch(endpoint)
       .then((response) => {
