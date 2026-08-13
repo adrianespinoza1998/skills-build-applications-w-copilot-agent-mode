@@ -1,33 +1,71 @@
-import './App.css'
+import { BrowserRouter, NavLink, Navigate, Route, Routes } from 'react-router-dom';
+import Activities from './components/Activities.jsx';
+import Leaderboard from './components/Leaderboard.jsx';
+import Teams from './components/Teams.jsx';
+import Users from './components/Users.jsx';
+import Workouts from './components/Workouts.jsx';
+import logo from '../../../docs/octofitapp-small.png';
+import './App.css';
+
+const navigation = [
+  { to: '/users', label: 'Users' },
+  { to: '/teams', label: 'Teams' },
+  { to: '/activities', label: 'Activities' },
+  { to: '/leaderboard', label: 'Leaderboard' },
+  { to: '/workouts', label: 'Workouts' },
+];
+
+function AppLayout() {
+  return (
+    <div className="container py-4">
+      <header className="mb-4">
+        <nav className="navbar navbar-expand-lg navbar-light bg-white rounded-4 shadow-sm border">
+          <div className="container-fluid px-4 py-3">
+            <div className="d-flex align-items-center me-3">
+              <img src={logo} alt="Octofit Tracker logo" height="42" className="me-3" />
+              <div>
+                <div className="fw-bold text-dark">Octofit Tracker</div>
+                <small className="text-muted">Fitness community dashboard</small>
+              </div>
+            </div>
+
+            <div className="navbar-nav flex-row flex-wrap gap-2 ms-auto">
+              {navigation.map((item) => (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  className={({ isActive }) =>
+                    `nav-link px-3 py-2 rounded-pill ${isActive ? 'bg-primary text-white' : 'text-dark'}`
+                  }
+                >
+                  {item.label}
+                </NavLink>
+              ))}
+            </div>
+          </div>
+        </nav>
+      </header>
+
+      <main className="row g-4">
+        <Routes>
+          <Route path="/" element={<Navigate to="/users" replace />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/teams" element={<Teams />} />
+          <Route path="/activities" element={<Activities />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
+          <Route path="/workouts" element={<Workouts />} />
+        </Routes>
+      </main>
+    </div>
+  );
+}
 
 function App() {
   return (
-    <main className="container py-5">
-      <div className="row justify-content-center">
-        <div className="col-md-8">
-          <div className="card shadow-sm border-0 rounded-4">
-            <div className="card-body p-5 text-center">
-              <span className="badge bg-success-subtle text-success-emphasis mb-3 px-3 py-2 rounded-pill">
-                OctoFit Tracker
-              </span>
-              <h1 className="display-5 fw-bold mb-3">Fitness, teams, and progress in one place</h1>
-              <p className="lead text-muted mb-4">
-                A modern multi-tier application for tracking workouts, communities, and leaderboard momentum.
-              </p>
-              <div className="d-flex justify-content-center gap-3 flex-wrap">
-                <button type="button" className="btn btn-primary btn-lg px-4">
-                  View dashboard
-                </button>
-                <button type="button" className="btn btn-outline-secondary btn-lg px-4">
-                  Join a team
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
-  )
+    <BrowserRouter>
+      <AppLayout />
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
